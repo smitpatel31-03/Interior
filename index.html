@@ -81,6 +81,9 @@
 </head>
 
 <body>
+  <div id="loader">
+    <div class="spinner"></div>
+  </div>
 
   <!-- header start -->
   <header class="HomeNav">
@@ -954,11 +957,11 @@
 
           const company_name_footer = document.getElementById("company-name")
           const title = document.getElementById("title")
-          if (company_name_footer && title){
+          if (company_name_footer && title) {
             title.textContent = data.company_name
             company_name_footer.textContent = data.company_name
 
-          } 
+          }
           // Banner
           const banner_background_image_1 = document.querySelector("#ca1.owl-carousel .item1");
           if (banner_background_image_1) {
@@ -1512,7 +1515,17 @@
             },
           });
         })
-        .catch(error => console.error("Data load error:", error));
+        .catch(error => console.error("Data load error:", error))
+        .finally(() => {
+          // Add 1s delay, then fade out loader
+          setTimeout(() => {
+            const loader = document.getElementById("loader");
+            loader.classList.add("hide");
+            setTimeout(() => {
+              loader.style.display = "none"
+            }, 500);
+          }, 2000);
+        });
 
       Spotlight.destroy();
       Spotlight.show(myGallery, {
@@ -1642,25 +1655,25 @@
 
   <script>
     (function () {
-  const mobileLink = "https://api.whatsapp.com/send?phone=+910000000000";
-  const desktopLink = "https://web.whatsapp.com/send?phone=+910000000000";
+      const mobileLink = "https://api.whatsapp.com/send?phone=+910000000000";
+      const desktopLink = "https://web.whatsapp.com/send?phone=+910000000000";
 
-  function isMobileDevice() {
-    return /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  }
+      function isMobileDevice() {
+        return /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      }
 
-  function updateWhatsAppLink() {
-    const isMobile = isMobileDevice();
-    const targetLink = isMobile ? mobileLink : desktopLink;
+      function updateWhatsAppLink() {
+        const isMobile = isMobileDevice();
+        const targetLink = isMobile ? mobileLink : desktopLink;
 
-    document.querySelectorAll(".set-url-target").forEach(el => {
-      el.setAttribute("href", targetLink);
-    });
-  }
+        document.querySelectorAll(".set-url-target").forEach(el => {
+          el.setAttribute("href", targetLink);
+        });
+      }
 
-  window.addEventListener("resize", updateWhatsAppLink);
-  window.addEventListener("load", updateWhatsAppLink);
-})();
+      window.addEventListener("resize", updateWhatsAppLink);
+      window.addEventListener("load", updateWhatsAppLink);
+    })();
 
 
   </script>
